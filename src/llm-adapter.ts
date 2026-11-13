@@ -627,7 +627,7 @@ function cleanModelDisplayName(name: string): string {
 
 function getModelReasoningEfforts(modelId: string): { efforts: readonly { id: ReturnType<typeof ReasoningEffortId>; name: string }[]; defaultEffort: ReturnType<typeof ReasoningEffortId> } | undefined {
   const lower = modelId.toLowerCase()
-  if (lower.includes('gemini-4-argon') || (lower.includes('flash') && !lower.includes('image'))) {
+  if (lower.includes('gemini-4-argon') || lower.includes('gemini-4-carbon') || (lower.includes('flash') && !lower.includes('image'))) {
     return {
       efforts: [
         { id: ReasoningEffortId('low'), name: 'Low' },
@@ -635,7 +635,7 @@ function getModelReasoningEfforts(modelId: string): { efforts: readonly { id: Re
         { id: ReasoningEffortId('high'), name: 'High' },
       ],
       defaultEffort: ReasoningEffortId(
-        lower.includes('gemini-4-argon') || lower.includes('gemini-3.8-flash') ? 'medium' : 'high',
+        lower.includes('gemini-4-argon') || lower.includes('gemini-4-carbon') || lower.includes('gemini-3.8-flash') ? 'medium' : 'high',
       ),
     }
   }
@@ -1519,6 +1519,7 @@ function resolveModelForTier(model: string, reasoningEffort?: GenerateOptions['r
   if (
     /^(?:antigravity-)?gemini-3\.[58]-flash$/iu.test(model)
     || /^(?:antigravity-)?gemini-4-argon$/iu.test(model)
+    || /^(?:antigravity-)?gemini-4-carbon$/iu.test(model)
     || /^(?:antigravity-)?claude-(?:opus|sonnet)-5-5$/iu.test(model)
   ) {
     return `${model}-${effort}`

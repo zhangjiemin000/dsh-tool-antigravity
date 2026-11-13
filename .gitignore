@@ -3,7 +3,8 @@ node_modules/
 .pnpm-store/
 
 # Build artifacts
-lib/
+# lib/ is committed as prebuilt artifacts (source build is broken without build/client-bundle.ts)
+# lib/
 dist/
 build/
 *.tsbuildinfo
